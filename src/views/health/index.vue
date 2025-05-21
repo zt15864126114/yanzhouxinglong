@@ -106,8 +106,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, nextTick, onUnmounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue'
-import * as echarts from 'echarts'
+import { Plus, Refresh, Download, Search, Check } from '@element-plus/icons-vue'
 import type { FormInstance } from 'element-plus'
 
 interface HealthItem {
@@ -173,7 +172,7 @@ const healthRules = {
   lastCheck: [{ required: true, message: '请选择最近检查时间', trigger: 'change' }]
 }
 
-const handleSearch = () => {
+function handleSearch() {
   let filtered = [...originalHealthList.value]
   if (searchForm.keyword) {
     filtered = filtered.filter(d => d.serviceName.includes(searchForm.keyword) || d.owner.includes(searchForm.keyword))
@@ -184,13 +183,6 @@ const handleSearch = () => {
   total.value = filtered.length
   healthList.value = filtered.slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
   updateStat()
-}
-
-const resetSearch = () => {
-  searchForm.keyword = ''
-  searchForm.status = ''
-  currentPage.value = 1
-  handleSearch()
 }
 
 const handleAdd = () => {

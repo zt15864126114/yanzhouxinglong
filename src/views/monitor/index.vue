@@ -515,6 +515,9 @@ const getStatusType = (status: string) => {
 // 添加图表加载状态
 const chartsLoading = ref(true)
 
+// 添加 currentAlert 变量
+const currentAlert = ref<any>(null)
+
 // 修改初始化图表函数
 const initCharts = () => {
   chartsLoading.value = true
@@ -773,6 +776,7 @@ const handleEdit = (row: any) => {
 
 // 处理告警
 const handleProcess = (row: any) => {
+  currentAlert.value = row
   processDialogVisible.value = true
   processForm.method = ''
   processForm.comment = ''
@@ -784,6 +788,7 @@ const handleBatchProcess = () => {
     ElMessage.warning('请选择要处理的告警')
     return
   }
+  currentAlert.value = selectedAlerts.value[0] // 使用第一个选中的告警
   processDialogVisible.value = true
   processForm.method = ''
   processForm.comment = ''
@@ -824,11 +829,19 @@ const handleAlertSubmit = async () => {
 // 提交处理表单
 const handleProcessSubmit = async () => {
   if (!processFormRef.value) return
-  
-  await processFormRef.value.validate((valid) => {
+  processFormRef.value.validate((valid) => {
     if (valid) {
+      const idx = alertList.value.findIndex(d => d.id === currentAlert.value?.id)
+      if (idx !== -1) {
+        alertList.value[idx].status = 'resolved'
+        alertList.value[idx].processMethod = processForm.method
+        alertList.value[idx].processComment = processForm.comment
+        alertList.value[idx].processTime = new Date().toLocaleString()
+        handleSearch()
+        ElMessage.success('处理成功')
+      }
       processDialogVisible.value = false
-      ElMessage.success('处理成功')
+      currentAlert.value = null
     }
   })
 }
