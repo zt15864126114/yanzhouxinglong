@@ -1,0 +1,220 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333;
+}
+
+/* Element Plus Override */
+.el-menu {
+  border-right: none !important;
+}
+
+.el-menu-item {
+  height: 50px !important;
+  line-height: 50px !important;
+}
+
+.el-menu--collapse .el-menu-item [class^=el-icon] {
+  margin: 0 !important;
+  font-size: 18px !important;
+  vertical-align: middle !important;
+}
+
+.el-menu-item.is-active {
+  background-color: #263445 !important;
+  color: #409EFF !important;
+}
+
+.el-menu-item:hover {
+  background-color: #263445 !important;
+}
+
+.el-menu-item i {
+  color: inherit;
+}
+
+/* 表格中的链接按钮样式 */
+.el-button--link {
+  display: inline-flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  padding: 4px 8px !important;
+  margin: 0 4px !important;
+  height: 32px !important;
+  border-radius: 4px !important;
+  transition: all 0.3s !important;
+}
+
+.el-button--link:hover {
+  background-color: rgba(64, 158, 255, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+.el-button--link.is-link {
+  color: var(--el-button-text-color) !important;
+}
+
+.el-button--link .el-icon {
+  margin-right: 4px !important;
+  font-size: 16px !important;
+}
+
+.el-button--link.el-button--primary.is-link {
+  color: var(--el-color-primary) !important;
+}
+
+.el-button--link.el-button--success.is-link {
+  color: var(--el-color-success) !important;
+}
+
+.el-button--link.el-button--danger.is-link {
+  color: var(--el-color-danger) !important;
+}
+
+/* 覆盖Element Plus的链接按钮文本隐藏行为 */
+.el-button.is-link:not(.is-text) .el-button__text {
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.el-button.is-link:not(.is-text):hover .el-button__text {
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* 链接按钮内部的span始终显示 */
+.el-button--link span {
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.el-popper.is-light {
+  border: none !important;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+.el-card {
+  border: none !important;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.3s;
+}
+
+.el-card:hover {
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-2px);
+}
+
+/* Common Classes */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Scrollbar Style */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 主要内容区样式 */
+.el-main {
+  padding: 20px !important;
+  background-color: #f0f2f5 !important;
+}
+
+/* 按钮美化 */
+.el-button {
+  font-weight: 500 !important;
+  transition: all 0.3s !important;
+}
+
+.el-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.el-button--primary {
+  background: linear-gradient(45deg, #409EFF, #5cadff) !important;
+  border: none !important;
+}
+
+.el-button--success {
+  background: linear-gradient(45deg, #67C23A, #85ce61) !important;
+  border: none !important;
+}
+
+.el-button--danger {
+  background: linear-gradient(45deg, #F56C6C, #f78989) !important;
+  border: none !important;
+}
+
+/* 下拉菜单样式 */
+.el-dropdown-menu__item:not(.is-disabled):hover {
+  background-color: #ecf5ff !important;
+  color: #409EFF !important;
+}
+
+/* 图标全局样式 */
+.el-icon {
+  vertical-align: middle;
+}
+
+/* 表格操作列按钮美化 */
+.table-actions .el-button.is-link {
+  font-size: 14px;
+  padding: 0 10px;
+  min-width: 0;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  height: 28px !important;
+  line-height: 28px !important;
+}
+.table-actions .el-button.is-link.is-danger {
+  color: #f56c6c !important;
+}
+.table-actions .el-button.is-link.is-primary {
+  color: #409eff !important;
+}
+.table-actions .el-button.is-link:active {
+  background: none !important;
+} 

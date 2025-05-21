@@ -1,0 +1,148 @@
+/* 
+  强制覆盖Element Plus的默认样式
+  这个文件中的样式规则会特别注重使用高优先级选择器和!important
+*/
+
+/* 链接按钮的文本强制显示 */
+.el-button.el-button--primary.is-link .el-button__inner-content,
+.el-button.el-button--success.is-link .el-button__inner-content,
+.el-button.el-button--danger.is-link .el-button__inner-content,
+.el-button.el-button--warning.is-link .el-button__inner-content,
+.el-button.el-button--info.is-link .el-button__inner-content,
+.el-button.el-button--default.is-link .el-button__inner-content {
+  visibility: visible !important;
+  width: auto !important;
+  opacity: 1 !important;
+  display: inline-block !important;
+  padding-right: 0 !important;
+}
+
+/* 链接按钮的各种可能的内部元素强制显示 */
+.el-button.is-link .el-button__text,
+.el-button.is-link span,
+.el-button.is-link div {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline-block !important;
+}
+
+/* 表格中的按钮文本显示 */
+.el-table .el-button.is-link {
+  height: auto !important;
+  padding: 6px 10px !important;
+}
+
+/* 表格中的按钮间距 */
+.el-table .el-button + .el-button {
+  margin-left: 6px !important;
+}
+
+/* 确保表格中按钮内容可见 */
+.el-table .el-button.is-link::before,
+.el-table .el-button.is-link::after {
+  display: none !important;
+}
+
+/* 确保在表格中的小尺寸链接按钮文本也能正确显示 */
+.el-table .el-button.is-link.el-button--small .el-button__inner-content,
+.el-table .el-button.is-link.el-button--small .el-button__text {
+  font-size: 12px !important;
+  visibility: visible !important;
+  display: inline !important;
+}
+
+/* 为防万一，给所有按钮添加最低宽度 */
+.el-button.is-link {
+  min-width: 60px !important;
+}
+
+/* 全局确保按钮文本一定会显示 */
+button.el-button span,
+button.el-button div {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* 针对表格中的按钮特殊处理 - 强化版 */
+.el-table .el-button.is-link,
+.el-table .el-button[link] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 4px !important;
+  padding: 5px 10px !important;
+  height: auto !important;
+  min-height: 32px !important;
+  background-color: rgba(0, 0, 0, 0.02) !important;
+  border-radius: 4px !important;
+}
+
+.el-table .el-button.is-link:hover,
+.el-table .el-button[link]:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.el-table .el-button.is-link .el-icon,
+.el-table .el-button[link] .el-icon {
+  margin-right: 4px !important;
+}
+
+/* 强制显示按钮组中的按钮文本 */
+.action-buttons .el-button.is-link,
+.action-buttons .el-button[link] {
+  visibility: visible !important;
+  background-color: rgba(0, 0, 0, 0.02) !important;
+  border-radius: 4px !important;
+}
+
+.action-buttons .el-button.is-link:hover,
+.action-buttons .el-button[link]:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 解决表格中按钮文本不显示问题 - 通用强化版 */
+.el-table__body .el-button.is-link .el-button__inner-content,
+.el-table__body .el-button[link] .el-button__inner-content,
+.el-table__body .el-button.is-link .el-button__text,
+.el-table__body .el-button[link] .el-button__text,
+.el-table__body .el-button.is-link span,
+.el-table__body .el-button[link] span {
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: static !important;
+  width: auto !important;
+  padding-left: 4px !important;
+  color: inherit !important;
+}
+
+/* 针对不同颜色的链接按钮设置不同的悬停效果 */
+.el-button--primary.is-link:hover,
+.el-button--primary[link]:hover {
+  background-color: rgba(64, 158, 255, 0.1) !important;
+}
+
+.el-button--success.is-link:hover,
+.el-button--success[link]:hover {
+  background-color: rgba(103, 194, 58, 0.1) !important;
+}
+
+.el-button--warning.is-link:hover,
+.el-button--warning[link]:hover {
+  background-color: rgba(230, 162, 60, 0.1) !important;
+}
+
+.el-button--danger.is-link:hover,
+.el-button--danger[link]:hover {
+  background-color: rgba(245, 108, 108, 0.1) !important;
+}
+
+/* 解决表格操作列中的链接按钮在小屏幕上挤在一起的问题 */
+@media screen and (max-width: 768px) {
+  .el-table .el-button.is-link,
+  .el-table .el-button[link] {
+    margin: 2px !important;
+    padding: 4px 8px !important;
+  }
+} 
