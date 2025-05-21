@@ -120,16 +120,16 @@ interface ResourceItem {
 }
 
 const originalResourceList = ref<ResourceItem[]>([
-  { id: 1, name: '高性能计算节点', code: 'CMP-001', type: 'compute', status: 'active', owner: '张建国', createTime: '2025-03-20 10:00:00' },
-  { id: 2, name: '虚拟机资源池', code: 'CMP-002', type: 'compute', status: 'active', owner: '李伟', createTime: '2025-03-19 09:00:00' },
-  { id: 3, name: '企业级存储阵列', code: 'STO-001', type: 'storage', status: 'active', owner: '王芳', createTime: '2025-03-18 14:00:00' },
-  { id: 4, name: '分布式备份存储', code: 'STO-002', type: 'storage', status: 'inactive', owner: '赵明', createTime: '2025-03-17 11:00:00' },
-  { id: 5, name: '核心交换网络', code: 'NET-001', type: 'network', status: 'active', owner: '陈静', createTime: '2025-03-16 10:00:00' },
-  { id: 6, name: '政务专网链路', code: 'NET-002', type: 'network', status: 'inactive', owner: '刘红', createTime: '2025-03-15 09:00:00' },
-  { id: 7, name: '办公自动化云桌面', code: 'CMP-003', type: 'compute', status: 'active', owner: '杨伟', createTime: '2025-03-14 15:00:00' },
-  { id: 8, name: '政务云对象存储', code: 'STO-003', type: 'storage', status: 'active', owner: '张力', createTime: '2025-03-13 13:00:00' },
-  { id: 9, name: '互联网出口带宽', code: 'NET-003', type: 'network', status: 'active', owner: '王华', createTime: '2025-03-12 10:00:00' },
-  { id: 10, name: '政务数据同步通道', code: 'NET-004', type: 'network', status: 'inactive', owner: '李霞', createTime: '2025-03-11 08:00:00' }
+  { id: 1, name: '兴隆庄办公云桌面', code: 'CMP-001', type: 'compute', status: 'active', owner: '王晓强', createTime: '2025-05-02 09:12:00' },
+  { id: 2, name: '社区人口管理节点', code: 'CMP-002', type: 'compute', status: 'active', owner: '李文娜', createTime: '2025-05-03 10:23:00' },
+  { id: 3, name: '社区政务存储', code: 'STO-001', type: 'storage', status: 'active', owner: '刘志洋', createTime: '2025-05-05 14:00:00' },
+  { id: 4, name: '分布式备份存储', code: 'STO-002', type: 'storage', status: 'inactive', owner: '张丽敏', createTime: '2025-05-07 11:00:00' },
+  { id: 5, name: '核心交换网络', code: 'NET-001', type: 'network', status: 'active', owner: '陈国磊', createTime: '2025-05-09 10:00:00' },
+  { id: 6, name: '政务专网链路', code: 'NET-002', type: 'network', status: 'inactive', owner: '孙晓宇', createTime: '2025-05-10 09:00:00' },
+  { id: 7, name: '社区服务云主机', code: 'CMP-003', type: 'compute', status: 'active', owner: '周建林', createTime: '2025-05-12 15:00:00' },
+  { id: 8, name: '社区对象存储', code: 'STO-003', type: 'storage', status: 'active', owner: '黄雅雯', createTime: '2025-05-14 13:00:00' },
+  { id: 9, name: '互联网出口带宽', code: 'NET-003', type: 'network', status: 'active', owner: '刘慧慧', createTime: '2025-05-16 10:00:00' },
+  { id: 10, name: '政务数据同步通道', code: 'NET-004', type: 'network', status: 'inactive', owner: '高宇涛', createTime: '2025-05-18 08:00:00' }
 ])
 const resourceList = ref<ResourceItem[]>([])
 
