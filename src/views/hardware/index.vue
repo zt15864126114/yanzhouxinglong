@@ -113,8 +113,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
 // 这里可以添加数据监控和刷新的逻辑
 </script>
 

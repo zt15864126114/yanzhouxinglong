@@ -259,16 +259,16 @@ const roleOptions = [
 
 // 模拟数据
 const mockUsers: User[] = [
-  { username: 'wangxq', name: '王晓强', phone: '13953701245', email: 'wangxq@xinglongzhuang.gov.cn', department: '街道信息化办公室', position: '主任', role: '系统管理员', status: 'active', lastLogin: '2025-05-03 08:12', createTime: '2025-05-02 09:23' },
-  { username: 'liwn', name: '李文娜', phone: '13853712561', email: 'liwn@xinglongzhuang.gov.cn', department: '街道信息化办公室', position: '副主任', role: '社区管理员', status: 'active', lastLogin: '2025-05-07 10:45', createTime: '2025-05-06 14:11' },
-  { username: 'liuzhy', name: '刘志洋', phone: '18653734576', email: 'liuzhy@xinglongzhuang.gov.cn', department: '社区服务中心', position: '网格员', role: '网格员', status: 'active', lastLogin: '2025-05-10 16:08', createTime: '2025-05-09 13:37' },
-  { username: 'zhanglm', name: '张丽敏', phone: '15053745652', email: 'zhanglm@xinglongzhuang.gov.cn', department: '便民服务中心', position: '便民服务人员', role: '便民服务人员', status: 'active', lastLogin: '2025-05-12 09:56', createTime: '2025-05-11 10:05' },
-  { username: 'chengl', name: '陈国磊', phone: '15153756984', email: 'chengl@xinglongzhuang.gov.cn', department: '社区服务中心', position: '养老服务专员', role: '养老服务专员', status: 'active', lastLogin: '2025-05-15 11:22', createTime: '2025-05-14 08:44' },
-  { username: 'sunxy', name: '孙晓宇', phone: '15253767690', email: 'sunxy@xinglongzhuang.gov.cn', department: '社区服务中心', position: '文化活动专员', role: '文化活动专员', status: 'active', lastLogin: '2025-05-16 15:33', createTime: '2025-05-15 16:18' },
-  { username: 'zhoujl', name: '周建林', phone: '15353778901', email: 'zhoujl@xinglongzhuang.gov.cn', department: '社区服务中心', position: '环境监测员', role: '环境监测员', status: 'active', lastLogin: '2025-05-17 07:41', createTime: '2025-05-16 12:29' },
-  { username: 'huangyy', name: '黄雅雯', phone: '15553789012', email: 'huangyy@xinglongzhuang.gov.cn', department: '社区服务中心', position: '志愿服务管理员', role: '志愿服务管理员', status: 'active', lastLogin: '2025-05-18 18:09', createTime: '2025-05-17 19:55' },
-  { username: 'liuhh', name: '刘慧慧', phone: '15653790123', email: 'liuhh@xinglongzhuang.gov.cn', department: '社区卫生服务站', position: '社区医生', role: '社区医生', status: 'active', lastLogin: '2025-05-19 20:17', createTime: '2025-05-18 21:03' },
-  { username: 'gaoyt', name: '高宇涛', phone: '15753791234', email: 'gaoyt@xinglongzhuang.gov.cn', department: '街道信息化办公室', position: '系统管理员', role: '系统管理员', status: 'active', lastLogin: '2025-05-20 13:28', createTime: '2025-05-19 14:39' }
+  { id: 1, username: 'wangxq', name: '王晓强', phone: '13953701245', email: 'wangxq@xinglongzhuang.gov.cn', department: '街道信息化办公室', position: '主任', role: '系统管理员', status: 'active', lastLogin: '2025-05-03 08:12', createTime: '2025-05-02 09:23' },
+  { id: 2, username: 'liwn', name: '李文娜', phone: '13853712561', email: 'liwn@xinglongzhuang.gov.cn', department: '街道信息化办公室', position: '副主任', role: '社区管理员', status: 'active', lastLogin: '2025-05-07 10:45', createTime: '2025-05-06 14:11' },
+  { id: 3, username: 'liuzhy', name: '刘志洋', phone: '18653734576', email: 'liuzhy@xinglongzhuang.gov.cn', department: '社区服务中心', position: '网格员', role: '网格员', status: 'active', lastLogin: '2025-05-10 16:08', createTime: '2025-05-09 13:37' },
+  { id: 4, username: 'zhanglm', name: '张丽敏', phone: '15053745652', email: 'zhanglm@xinglongzhuang.gov.cn', department: '便民服务中心', position: '便民服务人员', role: '便民服务人员', status: 'active', lastLogin: '2025-05-12 09:56', createTime: '2025-05-11 10:05' },
+  { id: 5, username: 'chengl', name: '陈国磊', phone: '15153756984', email: 'chengl@xinglongzhuang.gov.cn', department: '社区服务中心', position: '养老服务专员', role: '养老服务专员', status: 'active', lastLogin: '2025-05-15 11:22', createTime: '2025-05-14 08:44' },
+  { id: 6, username: 'sunxy', name: '孙晓宇', phone: '15253767690', email: 'sunxy@xinglongzhuang.gov.cn', department: '社区服务中心', position: '文化活动专员', role: '文化活动专员', status: 'active', lastLogin: '2025-05-16 15:33', createTime: '2025-05-15 16:18' },
+  { id: 7, username: 'zhoujl', name: '周建林', phone: '15353778901', email: 'zhoujl@xinglongzhuang.gov.cn', department: '社区服务中心', position: '环境监测员', role: '环境监测员', status: 'active', lastLogin: '2025-05-17 07:41', createTime: '2025-05-16 12:29' },
+  { id: 8, username: 'huangyy', name: '黄雅雯', phone: '15553789012', email: 'huangyy@xinglongzhuang.gov.cn', department: '社区服务中心', position: '志愿服务管理员', role: '志愿服务管理员', status: 'active', lastLogin: '2025-05-18 18:09', createTime: '2025-05-17 19:55' },
+  { id: 9, username: 'liuhh', name: '刘慧慧', phone: '15653790123', email: 'liuhh@xinglongzhuang.gov.cn', department: '社区卫生服务站', position: '社区医生', role: '社区医生', status: 'active', lastLogin: '2025-05-19 20:17', createTime: '2025-05-18 21:03' },
+  { id: 10, username: 'gaoyt', name: '高宇涛', phone: '15753791234', email: 'gaoyt@xinglongzhuang.gov.cn', department: '街道信息化办公室', position: '系统管理员', role: '系统管理员', status: 'active', lastLogin: '2025-05-20 13:28', createTime: '2025-05-19 14:39' }
 ]
 
 // 展示用用户数据

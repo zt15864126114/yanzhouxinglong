@@ -78,8 +78,8 @@
           </el-table-column>
           <el-table-column prop="updateTime" label="更新时间" width="180" />
           <el-table-column label="操作" width="120" fixed="right">
-            <template #default="{ row }">
-              <el-button link @click="viewSystemDetail(row)">查看详情</el-button>
+            <template #default>
+              <!-- 删除"查看详情"按钮 -->
             </template>
           </el-table-column>
         </el-table>
@@ -128,7 +128,6 @@
   
   <script setup lang="ts">
   import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
-  import { Monitor, Platform, Cpu, DataLine, Warning, Box, Folder, User, Calendar, DataAnalysis, Service, FirstAidKit, Connection } from '@element-plus/icons-vue'
   import * as echarts from 'echarts'
   
   // 统计数据
@@ -185,10 +184,6 @@
   
   const refreshAlarms = () => {
     // 实现刷新逻辑
-  }
-  
-  const viewSystemDetail = (row: any) => {
-    // 实现查看详情逻辑
   }
   
   const trendChartRef = ref<HTMLElement | null>(null)

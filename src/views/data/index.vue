@@ -129,24 +129,24 @@ const activeTab = ref('storage')
 
 // 存储数据
 const storageData = ref<StorageItem[]>([
-  { name: '政务云主存储', used: '28.3TB', total: '50TB', usagePercentage: 57 },
-  { name: '政务云备份存储', used: '12.5TB', total: '20TB', usagePercentage: 63 },
-  { name: '业务数据库存储', used: '8.1TB', total: '10TB', usagePercentage: 81 },
-  { name: '视频监控存储', used: '6.2TB', total: '8TB', usagePercentage: 78 },
-  { name: '归档存储', used: '35.8TB', total: '50TB', usagePercentage: 72 },
-  { name: '政务门户存储', used: '1.2TB', total: '5TB', usagePercentage: 24 },
-  { name: 'OA系统存储', used: '2.7TB', total: '5TB', usagePercentage: 54 }
+  { name: '兴隆庄主存储', used: '30.2TB', total: '50TB', usagePercentage: 60 },
+  { name: '社区人口数据存储', used: '15.8TB', total: '20TB', usagePercentage: 79 },
+  { name: '政务业务数据库', used: '9.3TB', total: '10TB', usagePercentage: 93 },
+  { name: '视频监控归档', used: '7.1TB', total: '8TB', usagePercentage: 89 },
+  { name: '历史档案存储', used: '40.5TB', total: '50TB', usagePercentage: 81 },
+  { name: '门户网站存储', used: '2.3TB', total: '5TB', usagePercentage: 46 },
+  { name: 'OA系统存储', used: '3.1TB', total: '5TB', usagePercentage: 62 }
 ])
 
 // 数据传输任务列表
 const transferData = ref<TransferItem[]>([
-  { id: 1, name: '政务数据同步', source: '/gov/data', destination: '/cloud/data', size: '1.2TB', status: '进行中', progress: 45 },
-  { id: 2, name: '业务数据库备份', source: '/db/prod', destination: '/backup/db', size: '800GB', status: '已完成', progress: 100 },
-  { id: 3, name: '视频监控归档', source: '/video/live', destination: '/archive/video', size: '2.5TB', status: '暂停中', progress: 0 },
-  { id: 4, name: '用户数据迁移', source: '/user/old', destination: '/user/new', size: '500GB', status: '进行中', progress: 68 },
-  { id: 5, name: '日志文件同步', source: '/logs/current', destination: '/logs/backup', size: '150GB', status: '已完成', progress: 100 },
-  { id: 6, name: 'OA系统数据备份', source: '/oa/data', destination: '/backup/oa', size: '300GB', status: '进行中', progress: 33 },
-  { id: 7, name: '门户网站镜像', source: '/portal', destination: '/mirror/portal', size: '200GB', status: '暂停中', progress: 0 }
+  { id: 1, name: '人口信息同步服务', source: '/data/population', destination: '/backup/population', size: '1.5TB', status: '进行中', progress: 52 },
+  { id: 2, name: '社区业务数据备份', source: '/data/business', destination: '/backup/business', size: '900GB', status: '已完成', progress: 100 },
+  { id: 3, name: '视频监控数据归档', source: '/data/video', destination: '/archive/video', size: '3.2TB', status: '暂停中', progress: 0 },
+  { id: 4, name: '用户信息迁移', source: '/data/user_old', destination: '/data/user_new', size: '600GB', status: '进行中', progress: 68 },
+  { id: 5, name: '日志文件同步', source: '/data/logs', destination: '/backup/logs', size: '200GB', status: '已完成', progress: 100 },
+  { id: 6, name: 'OA系统数据备份', source: '/data/oa', destination: '/backup/oa', size: '350GB', status: '进行中', progress: 33 },
+  { id: 7, name: '门户网站镜像', source: '/data/portal', destination: '/mirror/portal', size: '250GB', status: '暂停中', progress: 0 }
 ])
 
 // 进度条颜色计算

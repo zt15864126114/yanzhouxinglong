@@ -52,12 +52,12 @@ const router = createRouter({
           component: () => import('@/views/monitor/index.vue'),
           meta: { title: '监控告警', icon: 'Warning' }
         },
-        {
-          path: 'asset',
-          name: 'Asset',
-          component: () => import('@/views/asset/index.vue'),
-          meta: { title: '资产台账', icon: 'Suitcase' }
-        },
+        // {
+        //   path: 'asset',
+        //   name: 'Asset',
+        //   component: () => import('@/views/asset/index.vue'),
+        //   meta: { title: '资产台账', icon: 'Suitcase' }
+        // },
         // {
         //   path: 'ticket',
         //   name: 'Ticket',
