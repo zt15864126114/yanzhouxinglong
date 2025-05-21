@@ -104,9 +104,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, nextTick, onUnmounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Plus, Refresh, Download, Search, Check } from '@element-plus/icons-vue'
+import { Plus } from '@element-plus/icons-vue'
 import type { FormInstance } from 'element-plus'
 
 interface HealthItem {

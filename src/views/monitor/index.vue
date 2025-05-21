@@ -355,7 +355,10 @@ const originalAlertList = ref([
     level: 'critical', 
     content: '服务器A CPU使用率超过90%', 
     source: '服务器A',
-    status: 'pending'
+    status: 'pending',
+    processMethod: '',
+    processComment: '',
+    processTime: ''
   },
   { 
     id: 2, 
@@ -363,7 +366,10 @@ const originalAlertList = ref([
     level: 'warning', 
     content: '存储阵列B空间使用率超过80%', 
     source: '存储阵列B',
-    status: 'processing'
+    status: 'processing',
+    processMethod: '',
+    processComment: '',
+    processTime: ''
   },
   { 
     id: 3, 
@@ -371,7 +377,10 @@ const originalAlertList = ref([
     level: 'info', 
     content: '系统有新补丁可用', 
     source: '系统',
-    status: 'resolved'
+    status: 'resolved',
+    processMethod: '',
+    processComment: '',
+    processTime: ''
   },
   // ... 其他告警数据
 ])
