@@ -3,7 +3,7 @@
     <el-aside :width="isCollapse ? '64px' : '220px'" class="aside">
       <div class="logo">
 <!--        <img src="@/assets/logo.png" alt="logo" />-->
-        <span v-show="!isCollapse">超融合平台</span>
+        <span v-show="!isCollapse">融合平台</span>
       </div>
       <el-scrollbar>
         <el-menu
