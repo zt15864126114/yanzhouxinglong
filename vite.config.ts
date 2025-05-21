@@ -4,7 +4,7 @@ import { resolve } from 'path'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/yanzhouzhengfu/',
+  base: '/xinglongzhuang/',
   plugins: [vue()],
   resolve: {
     alias: {

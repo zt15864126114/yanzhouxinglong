@@ -7,9 +7,15 @@
         </el-form-item>
         <el-form-item>
           <el-select v-model="searchForm.type" placeholder="工单类型" clearable style="width: 120px">
-            <el-option label="故障报修" value="故障报修" />
-            <el-option label="巡检" value="巡检" />
-            <el-option label="升级" value="升级" />
+            <el-option label="居民服务" value="居民服务" />
+            <el-option label="社区巡查" value="社区巡查" />
+            <el-option label="设施维护" value="设施维护" />
+            <el-option label="安全事件" value="安全事件" />
+            <el-option label="养老服务" value="养老服务" />
+            <el-option label="文化活动" value="文化活动" />
+            <el-option label="环境问题" value="环境问题" />
+            <el-option label="志愿服务" value="志愿服务" />
+            <el-option label="医疗健康" value="医疗健康" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -68,9 +74,15 @@
         </el-form-item>
         <el-form-item label="工单类型" prop="type">
           <el-select v-model="ticketForm.type" placeholder="请选择工单类型" style="width: 140px">
-            <el-option label="故障报修" value="故障报修" />
-            <el-option label="巡检" value="巡检" />
-            <el-option label="升级" value="升级" />
+            <el-option label="居民服务" value="居民服务" />
+            <el-option label="社区巡查" value="社区巡查" />
+            <el-option label="设施维护" value="设施维护" />
+            <el-option label="安全事件" value="安全事件" />
+            <el-option label="养老服务" value="养老服务" />
+            <el-option label="文化活动" value="文化活动" />
+            <el-option label="环境问题" value="环境问题" />
+            <el-option label="志愿服务" value="志愿服务" />
+            <el-option label="医疗健康" value="医疗健康" />
           </el-select>
         </el-form-item>
         <el-form-item label="处理人" prop="handler">
@@ -138,16 +150,16 @@ interface TicketItem {
 }
 
 const originalTicketList = ref<TicketItem[]>([
-  { id: 1, title: '主机故障报修', type: '故障报修', handler: '李明', status: '处理中', progress: 2, createTime: '2025-04-01 09:00', logs: [ { time: '2025-04-01 08:00', content: '工单已派单', type: 'info' }, { time: '2025-04-01 09:00', content: '正在处理', type: 'warning' } ] },
-  { id: 2, title: '网络巡检', type: '巡检', handler: '王芳', status: '已完成', progress: 3, createTime: '2025-03-31 10:00', logs: [ { time: '2025-03-31 09:00', content: '工单已派单', type: 'info' }, { time: '2025-03-31 10:00', content: '巡检完成', type: 'success' } ] },
-  { id: 3, title: '系统升级', type: '升级', handler: '赵强', status: '待处理', progress: 1, createTime: '2025-03-30 14:00', logs: [ { time: '2025-03-30 14:00', content: '工单已派单', type: 'info' } ] },
-  { id: 4, title: '打印机故障', type: '故障报修', handler: '孙丽', status: '处理中', progress: 2, createTime: '2025-03-29 11:00', logs: [ { time: '2025-03-29 10:00', content: '工单已派单', type: 'info' }, { time: '2025-03-29 11:00', content: '正在处理', type: 'warning' } ] },
-  { id: 5, title: '服务器巡检', type: '巡检', handler: '周伟', status: '已完成', progress: 3, createTime: '2025-03-28 09:00', logs: [ { time: '2025-03-28 08:00', content: '工单已派单', type: 'info' }, { time: '2025-03-28 09:00', content: '巡检完成', type: 'success' } ] },
-  { id: 6, title: '数据库升级', type: '升级', handler: '马俊', status: '待处理', progress: 1, createTime: '2025-03-27 13:00', logs: [ { time: '2025-03-27 13:00', content: '工单已派单', type: 'info' } ] },
-  { id: 7, title: '交换机故障', type: '故障报修', handler: '许静', status: '处理中', progress: 2, createTime: '2025-03-26 10:00', logs: [ { time: '2025-03-26 09:00', content: '工单已派单', type: 'info' }, { time: '2025-03-26 10:00', content: '正在处理', type: 'warning' } ] },
-  { id: 8, title: '办公区巡检', type: '巡检', handler: '宋倩', status: '已完成', progress: 3, createTime: '2025-03-25 15:00', logs: [ { time: '2025-03-25 14:00', content: '工单已派单', type: 'info' }, { time: '2025-03-25 15:00', content: '巡检完成', type: 'success' } ] },
-  { id: 9, title: '应用系统升级', type: '升级', handler: '魏东', status: '待处理', progress: 1, createTime: '2025-03-24 16:00', logs: [ { time: '2025-03-24 16:00', content: '工单已派单', type: 'info' } ] },
-  { id: 10, title: '门禁系统故障', type: '故障报修', handler: '冯媛', status: '处理中', progress: 2, createTime: '2025-03-23 17:00', logs: [ { time: '2025-03-23 16:00', content: '工单已派单', type: 'info' }, { time: '2025-03-23 17:00', content: '正在处理', type: 'warning' } ] }
+  { id: 1, title: '老年人居家照护申请', type: '养老服务', handler: '宋倩', status: '处理中', progress: 2, createTime: '2025-04-01 09:00', logs: [ { time: '2025-04-01 08:00', content: '工单已派单', type: 'info' }, { time: '2025-04-01 09:00', content: '正在安排上门服务', type: 'warning' } ] },
+  { id: 2, title: '社区环境整治', type: '环境问题', handler: '冯媛', status: '已完成', progress: 3, createTime: '2025-03-31 10:00', logs: [ { time: '2025-03-31 09:00', content: '工单已派单', type: 'info' }, { time: '2025-03-31 10:00', content: '环境整治完成', type: 'success' } ] },
+  { id: 3, title: '社区文化活动策划', type: '文化活动', handler: '魏东', status: '待处理', progress: 1, createTime: '2025-03-30 14:00', logs: [ { time: '2025-03-30 14:00', content: '工单已派单', type: 'info' } ] },
+  { id: 4, title: '志愿者招募活动', type: '志愿服务', handler: '张丽', status: '处理中', progress: 2, createTime: '2025-03-29 11:00', logs: [ { time: '2025-03-29 10:00', content: '工单已派单', type: 'info' }, { time: '2025-03-29 11:00', content: '正在组织招募', type: 'warning' } ] },
+  { id: 5, title: '社区健康讲座', type: '医疗健康', handler: '李华', status: '已完成', progress: 3, createTime: '2025-03-28 09:00', logs: [ { time: '2025-03-28 08:00', content: '工单已派单', type: 'info' }, { time: '2025-03-28 09:00', content: '讲座已完成', type: 'success' } ] },
+  { id: 6, title: '居民证件办理', type: '居民服务', handler: '孙丽', status: '待处理', progress: 1, createTime: '2025-03-27 13:00', logs: [ { time: '2025-03-27 13:00', content: '工单已派单', type: 'info' } ] },
+  { id: 7, title: '社区设施维修', type: '设施维护', handler: '刘强', status: '处理中', progress: 2, createTime: '2025-03-26 10:00', logs: [ { time: '2025-03-26 09:00', content: '工单已派单', type: 'info' }, { time: '2025-03-26 10:00', content: '正在维修', type: 'warning' } ] },
+  { id: 8, title: '社区安全巡查', type: '社区巡查', handler: '赵明', status: '已完成', progress: 3, createTime: '2025-03-25 15:00', logs: [ { time: '2025-03-25 14:00', content: '工单已派单', type: 'info' }, { time: '2025-03-25 15:00', content: '巡查完成', type: 'success' } ] },
+  { id: 9, title: '社区安全隐患', type: '安全事件', handler: '马俊', status: '待处理', progress: 1, createTime: '2025-03-24 16:00', logs: [ { time: '2025-03-24 16:00', content: '工单已派单', type: 'info' } ] },
+  { id: 10, title: '居民投诉处理', type: '居民服务', handler: '李伟', status: '处理中', progress: 2, createTime: '2025-03-23 17:00', logs: [ { time: '2025-03-23 16:00', content: '工单已派单', type: 'info' }, { time: '2025-03-23 17:00', content: '正在处理', type: 'warning' } ] }
 ])
 const ticketList = ref<TicketItem[]>([])
 

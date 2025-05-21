@@ -62,6 +62,7 @@
         :data="userList"
         border
         style="width: 100%"
+        highlight-current-row
       >
         <el-table-column type="selection" width="55" />
         <el-table-column prop="username" label="用户名" min-width="120" />
@@ -71,7 +72,7 @@
         <el-table-column prop="role" label="角色" min-width="120">
           <template #default="{ row }">
             <el-tag
-              :type="row.role === '系统管理员' ? 'danger' : row.role === '运维管理员' ? 'warning' : 'info'"
+              :type="row.role === '系统管理员' ? 'danger' : row.role === '社区管理员' ? 'primary' : row.role === '网格员' ? 'warning' : row.role === '便民服务人员' ? 'success' : row.role === '养老服务专员' ? 'info' : row.role === '文化活动专员' ? 'success' : row.role === '环境监测员' ? 'warning' : row.role === '志愿服务管理员' ? 'primary' : row.role === '社区医生' ? 'success' : 'default'"
             >
               {{ getRoleName(row.role) }}
             </el-tag>
@@ -88,13 +89,18 @@
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" min-width="180" />
-        <el-table-column label="操作" width="300">
+        <el-table-column label="操作" width="120">
           <template #default="{ row }">
-            <div class="table-actions">
-              <el-button type="primary" link @click="handleEdit(row)">编辑</el-button>
-              <el-button type="primary" link @click="handlePermission(row)">权限</el-button>
-              <el-button type="danger" link @click="handleDelete(row)">删除</el-button>
-            </div>
+            <el-dropdown>
+              <el-button link>更多</el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="handleEdit(row)">编辑</el-dropdown-item>
+                  <el-dropdown-item @click="handlePermission(row)">权限</el-dropdown-item>
+                  <el-dropdown-item divided @click="handleDelete(row)" style="color: red;">删除</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </template>
         </el-table-column>
       </el-table>
@@ -241,143 +247,28 @@ const searchForm = reactive({
 // 角色选项
 const roleOptions = [
   { label: '系统管理员', value: '系统管理员' },
-  { label: '运维管理员', value: '运维管理员' },
-  { label: '部门管理员', value: '部门管理员' },
-  { label: '普通用户', value: '普通用户' }
+  { label: '社区管理员', value: '社区管理员' },
+  { label: '网格员', value: '网格员' },
+  { label: '便民服务人员', value: '便民服务人员' },
+  { label: '养老服务专员', value: '养老服务专员' },
+  { label: '文化活动专员', value: '文化活动专员' },
+  { label: '环境监测员', value: '环境监测员' },
+  { label: '志愿服务管理员', value: '志愿服务管理员' },
+  { label: '社区医生', value: '社区医生' }
 ]
 
 // 模拟数据
 const mockUsers: User[] = [
-  {
-    id: 1,
-    username: 'admin',
-    name: '张建国',
-    phone: '13953701245',
-    email: 'zhangjg@yanzhou.gov.cn',
-    department: '信息化办公室',
-    position: '主任',
-    role: '系统管理员',
-    status: 'active',
-    lastLogin: '2025-03-20 08:30:00',
-    createTime: '2025-01-01'
-  },
-  {
-    id: 2,
-    username: 'liwei',
-    name: '李伟',
-    phone: '13853712561',
-    email: 'liwei@yanzhou.gov.cn',
-    department: '信息化办公室',
-    position: '副主任',
-    role: '运维管理员',
-    status: 'active',
-    lastLogin: '2025-03-20 09:15:00',
-    createTime: '2025-01-15'
-  },
-  {
-    id: 3,
-    username: 'wangfang',
-    name: '王芳',
-    phone: '1375372389',
-    email: 'wangfang@yanzhou.gov.cn',
-    department: '信息化办公室',
-    position: '科员',
-    role: '普通用户',
-    status: 'inactive',
-    lastLogin: '2025-03-19 16:45:00',
-    createTime: '2025-02-01'
-  },
-  {
-    id: 4,
-    username: 'zhaoming',
-    name: '赵明',
-    phone: '13653734576',
-    email: 'zhaoming@yanzhou.gov.cn',
-    department: '政务服务中心',
-    position: '主任',
-    role: '部门管理员',
-    status: 'active',
-    lastLogin: '2025-03-20 10:20:00',
-    createTime: '2025-02-15'
-  },
-  {
-    id: 5,
-    username: 'chenjing',
-    name: '陈静',
-    phone: '13553745652',
-    email: 'chenjing@yanzhou.gov.cn',
-    department: '政务服务中心',
-    position: '科员',
-    role: '普通用户',
-    status: 'inactive',
-    lastLogin: '2025-03-19 14:30:00',
-    createTime: '2025-03-01'
-  },
-  {
-    id: 6,
-    username: 'liuhong',
-    name: '刘红',
-    phone: '13453756984',
-    email: 'liuhong@yanzhou.gov.cn',
-    department: '经济发展局',
-    position: '主任',
-    role: '部门管理员',
-    status: 'active',
-    lastLogin: '2025-03-20 11:15:00',
-    createTime: '2025-03-15'
-  },
-  {
-    id: 7,
-    username: 'yangwei',
-    name: '杨伟',
-    phone: '13353767690',
-    email: 'yangwei@yanzhou.gov.cn',
-    department: '经济发展局',
-    position: '科员',
-    role: '普通用户',
-    status: 'active',
-    lastLogin: '2025-03-19 15:45:00',
-    createTime: '2025-04-01'
-  },
-  {
-    id: 8,
-    username: 'zhangli',
-    name: '张力',
-    phone: '13253778901',
-    email: 'zhangli@yanzhou.gov.cn',
-    department: '社会事务局',
-    position: '主任',
-    role: '部门管理员',
-    status: 'inactive',
-    lastLogin: '2025-03-20 13:20:00',
-    createTime: '2025-04-15'
-  },
-  {
-    id: 9,
-    username: 'wanghua',
-    name: '王华',
-    phone: '13153789012',
-    email: 'wanghua@yanzhou.gov.cn',
-    department: '社会事务局',
-    position: '科员',
-    role: '普通用户',
-    status: 'active',
-    lastLogin: '2025-03-19 17:30:00',
-    createTime: '2025-05-01'
-  },
-  {
-    id: 10,
-    username: 'lixia',
-    name: '李霞',
-    phone: '13053790123',
-    email: 'lixia@yanzhou.gov.cn',
-    department: '信息化办公室',
-    position: '科员',
-    role: '普通用户',
-    status: 'inactive',
-    lastLogin: '2025-03-20 14:45:00',
-    createTime: '2025-05-15'
-  }
+  { username: 'wangxq', name: '王晓强', phone: '13953701245', email: 'wangxq@xinglongzhuang.gov.cn', department: '街道信息化办公室', position: '主任', role: '系统管理员', status: 'active', lastLogin: '2025-05-03 08:12', createTime: '2025-05-02 09:23' },
+  { username: 'liwn', name: '李文娜', phone: '13853712561', email: 'liwn@xinglongzhuang.gov.cn', department: '街道信息化办公室', position: '副主任', role: '社区管理员', status: 'active', lastLogin: '2025-05-07 10:45', createTime: '2025-05-06 14:11' },
+  { username: 'liuzhy', name: '刘志洋', phone: '18653734576', email: 'liuzhy@xinglongzhuang.gov.cn', department: '社区服务中心', position: '网格员', role: '网格员', status: 'active', lastLogin: '2025-05-10 16:08', createTime: '2025-05-09 13:37' },
+  { username: 'zhanglm', name: '张丽敏', phone: '15053745652', email: 'zhanglm@xinglongzhuang.gov.cn', department: '便民服务中心', position: '便民服务人员', role: '便民服务人员', status: 'active', lastLogin: '2025-05-12 09:56', createTime: '2025-05-11 10:05' },
+  { username: 'chengl', name: '陈国磊', phone: '15153756984', email: 'chengl@xinglongzhuang.gov.cn', department: '社区服务中心', position: '养老服务专员', role: '养老服务专员', status: 'active', lastLogin: '2025-05-15 11:22', createTime: '2025-05-14 08:44' },
+  { username: 'sunxy', name: '孙晓宇', phone: '15253767690', email: 'sunxy@xinglongzhuang.gov.cn', department: '社区服务中心', position: '文化活动专员', role: '文化活动专员', status: 'active', lastLogin: '2025-05-16 15:33', createTime: '2025-05-15 16:18' },
+  { username: 'zhoujl', name: '周建林', phone: '15353778901', email: 'zhoujl@xinglongzhuang.gov.cn', department: '社区服务中心', position: '环境监测员', role: '环境监测员', status: 'active', lastLogin: '2025-05-17 07:41', createTime: '2025-05-16 12:29' },
+  { username: 'huangyy', name: '黄雅雯', phone: '15553789012', email: 'huangyy@xinglongzhuang.gov.cn', department: '社区服务中心', position: '志愿服务管理员', role: '志愿服务管理员', status: 'active', lastLogin: '2025-05-18 18:09', createTime: '2025-05-17 19:55' },
+  { username: 'liuhh', name: '刘慧慧', phone: '15653790123', email: 'liuhh@xinglongzhuang.gov.cn', department: '社区卫生服务站', position: '社区医生', role: '社区医生', status: 'active', lastLogin: '2025-05-19 20:17', createTime: '2025-05-18 21:03' },
+  { username: 'gaoyt', name: '高宇涛', phone: '15753791234', email: 'gaoyt@xinglongzhuang.gov.cn', department: '街道信息化办公室', position: '系统管理员', role: '系统管理员', status: 'active', lastLogin: '2025-05-20 13:28', createTime: '2025-05-19 14:39' }
 ]
 
 // 展示用用户数据
@@ -742,7 +633,7 @@ onMounted(() => {
 .pagination {
   margin-top: 20px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .role-operation {
@@ -772,5 +663,9 @@ onMounted(() => {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.el-table__row:hover {
+  background: #f5f7fa !important;
 }
 </style> 

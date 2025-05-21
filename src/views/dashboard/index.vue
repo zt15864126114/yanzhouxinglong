@@ -1,97 +1,123 @@
 <template>
     <div class="dashboard-container">
-      <!-- 数据概览卡片 -->
-      <el-row :gutter="20" class="data-overview">
-        <el-col :span="6" v-for="(item, index) in overviewData" :key="index">
-          <el-card shadow="hover" class="overview-card">
-            <div class="overview-item">
-              <div class="overview-icon" :style="{ background: item.color }">
-                <el-icon><component :is="item.icon" /></el-icon>
+      <!-- 顶部统计卡片 -->
+      <el-row :gutter="20">
+        <el-col :span="6">
+          <el-card shadow="hover" class="stat-card">
+            <template #header>
+              <div class="card-header">
+                <span>业务系统</span>
+                <el-tag type="success">运行中</el-tag>
               </div>
-              <div class="overview-info">
-                <div class="overview-title">{{ item.title }}</div>
-                <div class="overview-value">{{ item.value }}</div>
-                <div class="overview-trend" :class="item.trend">
-                  {{ item.trend === 'up' ? '↑' : '↓' }} {{ item.rate }}%
-                </div>
+            </template>
+            <div class="stat-content">
+              <div class="stat-number">{{ systemStats.total }}</div>
+              <div class="stat-label">系统总数</div>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="6">
+          <el-card shadow="hover" class="stat-card">
+            <template #header>
+              <div class="card-header">
+                <span>硬件资源</span>
+                <el-tag type="primary">正常</el-tag>
               </div>
+            </template>
+            <div class="stat-content">
+              <div class="stat-number">{{ hardwareStats.total }}</div>
+              <div class="stat-label">资源总数</div>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="6">
+          <el-card shadow="hover" class="stat-card">
+            <template #header>
+              <div class="card-header">
+                <span>存储容量</span>
+                <el-tag type="warning">使用中</el-tag>
+              </div>
+            </template>
+            <div class="stat-content">
+              <div class="stat-number">{{ storageStats.used }}TB</div>
+              <div class="stat-label">已用/{{ storageStats.total }}TB</div>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="6">
+          <el-card shadow="hover" class="stat-card">
+            <template #header>
+              <div class="card-header">
+                <span>系统负载</span>
+                <el-tag type="info">实时</el-tag>
+              </div>
+            </template>
+            <div class="stat-content">
+              <div class="stat-number">{{ loadStats.cpu }}%</div>
+              <div class="stat-label">CPU使用率</div>
             </div>
           </el-card>
         </el-col>
       </el-row>
   
-      <!-- 图表区域 -->
-      <el-row :gutter="20" class="chart-row">
-        <el-col :span="16">
-          <el-card class="chart-card">
+      <!-- 业务系统状态 -->
+      <el-card class="system-status" style="margin-top: 20px;">
+        <template #header>
+          <div class="card-header">
+            <span>业务系统状态</span>
+            <el-button type="primary" size="small" @click="refreshSystemStatus">刷新</el-button>
+          </div>
+        </template>
+        <el-table :data="systemList" style="width: 100%" :max-height="400">
+          <el-table-column prop="systemName" label="系统名称" min-width="180" />
+          <el-table-column prop="owner" label="负责人" width="120" />
+          <el-table-column prop="status" label="状态" width="100">
+            <template #default="{ row }">
+              <el-tag :type="row.status === '运行中' ? 'success' : 'danger'">{{ row.status }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="updateTime" label="更新时间" width="180" />
+          <el-table-column label="操作" width="120" fixed="right">
+            <template #default="{ row }">
+              <el-button link @click="viewSystemDetail(row)">查看详情</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
+  
+      <!-- 硬件资源监控 -->
+      <el-row :gutter="20" style="margin-top: 20px;">
+        <el-col :span="12">
+          <el-card class="monitor-card">
             <template #header>
               <div class="card-header">
-                <span>系统资源使用趋势</span>
+                <span>资源使用趋势</span>
                 <el-radio-group v-model="timeRange" size="small">
-                  <el-radio-button label="week">本周</el-radio-button>
-                  <el-radio-button label="month">本月</el-radio-button>
-                  <el-radio-button label="year">全年</el-radio-button>
+                  <el-radio-button label="day">24小时</el-radio-button>
+                  <el-radio-button label="week">7天</el-radio-button>
+                  <el-radio-button label="month">30天</el-radio-button>
                 </el-radio-group>
               </div>
             </template>
-            <div class="chart-container" ref="resourceChartRef"></div>
+            <div ref="trendChartRef" class="chart-container"></div>
           </el-card>
         </el-col>
-        <el-col :span="8">
-          <el-card class="chart-card">
-            <template #header>
-              <div class="card-header">
-                <span>资源分布</span>
-              </div>
-            </template>
-            <div class="chart-container" ref="pieChartRef"></div>
-          </el-card>
-        </el-col>
-      </el-row>
-  
-      <!-- 系统状态 -->
-      <el-row :gutter="20" class="status-row">
         <el-col :span="12">
-          <el-card class="status-card">
+          <el-card class="monitor-card">
             <template #header>
               <div class="card-header">
                 <span>系统告警</span>
-                <div class="dashboard-actions">
-                  <el-button type="primary" link>查看全部</el-button>
-                </div>
-              </div>
-            </template>
-            <el-table :data="alerts" style="width: 100%">
-              <el-table-column prop="time" label="时间" width="180" />
-              <el-table-column prop="level" label="级别" width="100">
-                <template #default="{ row }">
-                  <el-tag :type="row.level === '严重' ? 'danger' : row.level === '警告' ? 'warning' : 'info'">
-                    {{ row.level }}
-                  </el-tag>
-                </template>
-              </el-table-column>
-              <el-table-column prop="content" label="内容" />
-            </el-table>
-          </el-card>
-        </el-col>
-        <el-col :span="12">
-          <el-card class="status-card">
-            <template #header>
-              <div class="card-header">
-                <span>最近操作</span>
-                <div class="dashboard-actions">
-                  <el-button type="primary" link>查看全部</el-button>
-                </div>
+                <el-button type="primary" size="small" @click="refreshAlarms">刷新</el-button>
               </div>
             </template>
             <el-timeline>
               <el-timeline-item
-                v-for="(activity, index) in activities"
+                v-for="(alarm, index) in alarmList"
                 :key="index"
-                :timestamp="activity.timestamp"
-                :type="activity.type"
+                :type="alarm.type"
+                :timestamp="alarm.time"
               >
-                {{ activity.content }}
+                {{ alarm.content }}
               </el-timeline-item>
             </el-timeline>
           </el-card>
@@ -101,208 +127,129 @@
   </template>
   
   <script setup lang="ts">
-  import { ref, onMounted, onUnmounted } from 'vue';
-  import * as echarts from 'echarts';
+  import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
+  import { Monitor, Platform, Cpu, DataLine, Warning, Box, Folder, User, Calendar, DataAnalysis, Service, FirstAidKit, Connection } from '@element-plus/icons-vue'
+  import * as echarts from 'echarts'
   
-  // 数据概览
-  const overviewData = ref([
-    {
-      title: '在线设备',
-      value: '50',
-      icon: 'Monitor',
-      color: '#409EFF',
-      trend: 'up',
-      rate: '12'
-    },
-    {
-      title: '资源使用率',
-      value: '68%',
-      icon: 'Connection',
-      color: '#67C23A',
-      trend: 'down',
-      rate: '5'
-    },
-    {
-      title: '数据总量',
-      value: '2.5TB',
-      icon: 'DataLine',
-      color: '#E6A23C',
-      trend: 'up',
-      rate: '8'
-    },
-    {
-      title: '告警数量',
-      value: '12',
-      icon: 'Warning',
-      color: '#F56C6C',
-      trend: 'down',
-      rate: '3'
-    }
-  ]);
+  // 统计数据
+  const systemStats = ref({
+    total: 18,
+    running: 18,
+    warning: 0,
+    error: 0
+  })
+  
+  const hardwareStats = ref({
+    total: 4,
+    normal: 4,
+    warning: 0,
+    error: 0
+  })
+  
+  const storageStats = ref({
+    total: 20,
+    used: 9,
+    free: 11
+  })
+  
+  const loadStats = ref({
+    cpu: 65,
+    memory: 78,
+    storage: 45,
+    network: 32
+  })
   
   // 时间范围选择
-  const timeRange = ref('week');
+  const timeRange = ref('day')
   
-  // 图表实例
-  let resourceChart: echarts.ECharts | null = null;
-  let pieChart: echarts.ECharts | null = null;
-  const resourceChartRef = ref<HTMLElement>();
-  const pieChartRef = ref<HTMLElement>();
+  // 系统列表数据
+  const systemList = ref([
+    { id: 1, systemName: '社区人口管理', owner: '王晓强', status: '运行中', updateTime: '2025-04-01 09:00' },
+    { id: 2, systemName: '便民服务门户', owner: '李文娜', status: '运行中', updateTime: '2025-04-01 08:30' },
+    { id: 3, systemName: '社区监控平台', owner: '刘志洋', status: '运行中', updateTime: '2025-03-31 17:00' },
+    { id: 4, systemName: '网格化管理平台', owner: '张丽敏', status: '运行中', updateTime: '2025-03-31 16:00' },
+    { id: 5, systemName: '应急指挥系统', owner: '陈国磊', status: '运行中', updateTime: '2025-03-30 14:00' }
+  ])
   
-  // 系统告警数据
-  const alerts = ref([
-    {
-      time: '2025-03-20 10:30:00',
-      level: '严重',
-      content: '服务器CPU使用率超过90%'
-    },
-    {
-      time: '2025-03-20 09:15:00',
-      level: '警告',
-      content: '存储空间使用率超过80%'
-    },
-    {
-      time: '2025-03-19 16:45:00',
-      level: '提示',
-      content: '系统更新可用'
+  // 告警列表
+  const alarmList = ref([
+    { type: 'warning', time: '2025-04-01 10:30', content: '存储空间使用率超过70%' },
+    { type: 'info', time: '2025-04-01 09:15', content: '系统例行维护完成' },
+    { type: 'success', time: '2025-04-01 08:00', content: '数据备份任务完成' }
+  ])
+  
+  // 刷新方法
+  const refreshSystemStatus = () => {
+    // 实现刷新逻辑
+  }
+  
+  const refreshAlarms = () => {
+    // 实现刷新逻辑
+  }
+  
+  const viewSystemDetail = (row: any) => {
+    // 实现查看详情逻辑
+  }
+  
+  const trendChartRef = ref<HTMLElement | null>(null)
+  let trendChart: echarts.ECharts | null = null
+  
+  const getTrendData = () => {
+    // 根据 timeRange 返回不同的模拟数据
+    if (timeRange.value === 'day') {
+      return {
+        x: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+        cpu: [65, 60, 62, 66, 68, 72, 69, 70, 68, 67, 66, 65, 64, 63, 62, 61, 60, 62, 64, 66, 68, 70, 72, 74],
+        mem: [78, 75, 76, 77, 79, 81, 78, 77, 76, 75, 74, 73, 72, 71, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88],
+        storage: [45, 44, 44, 45, 45, 46, 46, 47, 47, 48, 48, 49, 49, 50, 50, 51, 51, 52, 52, 53, 53, 54, 54, 55]
+      }
+    } else if (timeRange.value === 'week') {
+      return {
+        x: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        cpu: [65, 60, 70, 66, 68, 72, 69],
+        mem: [78, 75, 80, 77, 79, 81, 78],
+        storage: [45, 44, 46, 45, 47, 48, 45]
+      }
+    } else {
+      return {
+        x: Array.from({ length: 30 }, (_, i) => `${i + 1}日`),
+        cpu: Array.from({ length: 30 }, () => Math.floor(60 + Math.random() * 15)),
+        mem: Array.from({ length: 30 }, () => Math.floor(70 + Math.random() * 20)),
+        storage: Array.from({ length: 30 }, () => Math.floor(40 + Math.random() * 15))
+      }
     }
-  ]);
+  }
   
-  // 最近操作数据
-  const activities = ref([
-    {
-      content: '系统管理员登录系统',
-      timestamp: '2025-03-20 10:00:00',
-      type: 'primary'
-    },
-    {
-      content: '新增用户：张三',
-      timestamp: '2025-03-20 09:30:00',
-      type: 'success'
-    },
-    {
-      content: '更新系统配置',
-      timestamp: '2025-03-20 09:00:00',
-      type: 'info'
+  const renderTrendChart = () => {
+    if (!trendChartRef.value) return
+    if (!trendChart) {
+      trendChart = echarts.init(trendChartRef.value)
     }
-  ]);
-  
-  // 初始化资源使用趋势图表
-  const initResourceChart = () => {
-    if (!resourceChartRef.value) return;
-    
-    resourceChart = echarts.init(resourceChartRef.value);
+    const data = getTrendData()
     const option = {
-      tooltip: {
-        trigger: 'axis'
-      },
-      legend: {
-        data: ['CPU使用率', '内存使用率', '存储使用率']
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-      },
-      yAxis: {
-        type: 'value',
-        axisLabel: {
-          formatter: '{value}%'
-        }
-      },
+      tooltip: { trigger: 'axis' },
+      legend: { data: ['CPU', '内存', '存储'] },
+      xAxis: { type: 'category', data: data.x },
+      yAxis: { type: 'value', axisLabel: { formatter: '{value}%' } },
       series: [
-        {
-          name: 'CPU使用率',
-          type: 'line',
-          data: [65, 72, 68, 75, 82, 70, 65],
-          smooth: true
-        },
-        {
-          name: '内存使用率',
-          type: 'line',
-          data: [45, 52, 48, 55, 62, 50, 45],
-          smooth: true
-        },
-        {
-          name: '存储使用率',
-          type: 'line',
-          data: [35, 42, 38, 45, 52, 40, 35],
-          smooth: true
-        }
+        { name: 'CPU', type: 'line', data: data.cpu, smooth: true },
+        { name: '内存', type: 'line', data: data.mem, smooth: true },
+        { name: '存储', type: 'line', data: data.storage, smooth: true }
       ]
-    };
-    resourceChart.setOption(option);
-  };
-  
-  // 初始化资源分布饼图
-  const initPieChart = () => {
-    if (!pieChartRef.value) return;
-    
-    pieChart = echarts.init(pieChartRef.value);
-    const option = {
-      tooltip: {
-        trigger: 'item',
-        formatter: '{a} <br/>{b}: {c} ({d}%)'
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'left'
-      },
-      series: [
-        {
-          name: '资源分布',
-          type: 'pie',
-          radius: ['50%', '70%'],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: '20',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: [
-            { value: 1048, name: '计算资源' },
-            { value: 735, name: '存储资源' },
-            { value: 580, name: '网络资源' },
-            { value: 484, name: '其他资源' }
-          ]
-        }
-      ]
-    };
-    pieChart.setOption(option);
-  };
-  
-  // 监听窗口大小变化
-  const handleResize = () => {
-    resourceChart?.resize();
-    pieChart?.resize();
-  };
+    }
+    trendChart.setOption(option)
+  }
   
   onMounted(() => {
-    initResourceChart();
-    initPieChart();
-    window.addEventListener('resize', handleResize);
-  });
-  
-  onUnmounted(() => {
-    window.removeEventListener('resize', handleResize);
-    resourceChart?.dispose();
-    pieChart?.dispose();
-  });
+    renderTrendChart()
+    window.addEventListener('resize', () => trendChart?.resize())
+  })
+  onBeforeUnmount(() => {
+    trendChart?.dispose()
+  })
+  watch(timeRange, () => {
+    renderTrendChart()
+  })
   </script>
   
   <style scoped>
@@ -310,70 +257,8 @@
     padding: 20px;
   }
   
-  .data-overview {
-    margin-bottom: 20px;
-  }
-  
-  .overview-card {
-    height: 120px;
-  }
-  
-  .overview-item {
-    display: flex;
-    align-items: center;
-    height: 100%;
-  }
-  
-  .overview-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 16px;
-  }
-  
-  .overview-icon :deep(.el-icon) {
-    font-size: 32px;
-    color: white;
-  }
-  
-  .overview-info {
-    flex: 1;
-  }
-  
-  .overview-title {
-    font-size: 14px;
-    color: #909399;
-    margin-bottom: 8px;
-  }
-  
-  .overview-value {
-    font-size: 24px;
-    font-weight: bold;
-    color: #303133;
-    margin-bottom: 8px;
-  }
-  
-  .overview-trend {
-    font-size: 12px;
-  }
-  
-  .overview-trend.up {
-    color: #67C23A;
-  }
-  
-  .overview-trend.down {
-    color: #F56C6C;
-  }
-  
-  .chart-row {
-    margin-bottom: 20px;
-  }
-  
-  .chart-card {
-    margin-bottom: 20px;
+  .stat-card {
+    height: 180px;
   }
   
   .card-header {
@@ -382,12 +267,41 @@
     align-items: center;
   }
   
-  .chart-container {
-    height: 300px;
+  .stat-content {
+    text-align: center;
+    padding: 20px 0;
   }
   
-  .status-card {
+  .stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #303133;
+    margin-bottom: 8px;
+  }
+  
+  .stat-label {
+    font-size: 14px;
+    color: #909399;
+  }
+  
+  .system-status {
+    margin-bottom: 20px;
+  }
+  
+  .monitor-card {
     height: 400px;
+  }
+  
+  .chart-container {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .chart-placeholder {
+    color: #909399;
+    font-size: 14px;
   }
   
   :deep(.el-timeline-item__content) {
@@ -396,22 +310,6 @@
   
   :deep(.el-timeline-item__timestamp) {
     color: #909399;
-  }
-  
-  .dashboard-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  .dashboard-actions .el-button.is-link {
-    font-size: 14px;
-    padding: 0 10px;
-    min-width: 0;
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    height: 28px !important;
-    line-height: 28px !important;
   }
   </style>
   

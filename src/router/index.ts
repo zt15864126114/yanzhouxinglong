@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory('/yanzhouzhengfu/'),
+  history: createWebHistory('/xinglongzhuang/'),
   routes: [
     {
       path: '/',
@@ -58,12 +58,12 @@ const router = createRouter({
           component: () => import('@/views/asset/index.vue'),
           meta: { title: '资产台账', icon: 'Suitcase' }
         },
-        {
-          path: 'ticket',
-          name: 'Ticket',
-          component: () => import('@/views/ticket/index.vue'),
-          meta: { title: '运维工单', icon: 'Tickets' }
-        },
+        // {
+        //   path: 'ticket',
+        //   name: 'Ticket',
+        //   component: () => import('@/views/ticket/index.vue'),
+        //   meta: { title: '运维工单', icon: 'Tickets' }
+        // },
         {
           path: 'health',
           name: 'Health',
@@ -88,11 +88,17 @@ const router = createRouter({
           component: () => import('@/views/backup/index.vue'),
           meta: { title: '备份任务', icon: 'DocumentCopy' }
         },
+        // {
+        //   path: 'log',
+        //   name: 'Log',
+        //   component: () => import('@/views/log/index.vue'),
+        //   meta: { title: '操作日志', icon: 'Document' }
+        // },
         {
-          path: 'log',
-          name: 'Log',
-          component: () => import('@/views/log/index.vue'),
-          meta: { title: '操作日志', icon: 'Document' }
+          path: 'hardware',
+          name: 'Hardware',
+          component: () => import('@/views/hardware/index.vue'),
+          meta: { title: '硬件资源管理', icon: 'Connection' }
         }
       ]
     }

@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { Monitor, Platform, Cpu, DataLine, Warning, Box, Folder } from '@element-plus/icons-vue'
+import { Monitor, Platform, Cpu, DataLine, Warning, Box, Folder, User, Calendar, DataAnalysis, Service, FirstAidKit, Connection } from '@element-plus/icons-vue'
 
 interface SystemItem {
   id: number;
@@ -86,16 +86,24 @@ interface SystemItem {
 }
 
 const originalSystemList = ref<SystemItem[]>([
-  { id: 1, systemName: '人口管理系统', owner: '李明', status: '运行中', desc: '人口信息管理', updateTime: '2025-04-01 09:00', icon: Monitor },
-  { id: 2, systemName: '政务门户', owner: '王芳', status: '运行中', desc: '门户网站', updateTime: '2025-04-01 08:30', icon: Platform },
-  { id: 3, systemName: '视频监控平台', owner: '赵强', status: '异常', desc: '视频监控与告警', updateTime: '2025-03-31 17:00', icon: Warning },
-  { id: 4, systemName: '数据共享平台', owner: '孙丽', status: '运行中', desc: '数据共享交换', updateTime: '2025-03-31 16:00', icon: DataLine },
-  { id: 5, systemName: '应急指挥系统', owner: '周伟', status: '运行中', desc: '应急指挥调度', updateTime: '2025-03-30 14:00', icon: Box },
-  { id: 6, systemName: '资产管理系统', owner: '马俊', status: '停用', desc: '资产台账与管理', updateTime: '2025-03-29 11:00', icon: Folder },
-  { id: 7, systemName: '工单系统', owner: '许静', status: '运行中', desc: '运维工单管理', updateTime: '2025-03-28 09:00', icon: Cpu },
-  { id: 8, systemName: '能耗监控平台', owner: '宋倩', status: '运行中', desc: '能耗数据采集', updateTime: '2025-03-27 13:00', icon: DataLine },
-  { id: 9, systemName: '安全事件平台', owner: '魏东', status: '异常', desc: '安全事件监控', updateTime: '2025-03-26 10:00', icon: Warning },
-  { id: 10, systemName: '备份任务系统', owner: '冯媛', status: '运行中', desc: '数据备份与恢复', updateTime: '2025-03-25 15:00', icon: Folder }
+  { id: 1, systemName: '社区人口管理', owner: '张建国', status: '运行中', desc: '社区居民信息管理、人口普查、流动人口管理', updateTime: '2025-04-01 09:00', icon: Monitor },
+  { id: 2, systemName: '便民服务门户', owner: '李伟', status: '运行中', desc: '街道便民服务网站、在线办事、政策咨询', updateTime: '2025-04-01 08:30', icon: Platform },
+  { id: 3, systemName: '社区监控平台', owner: '王芳', status: '运行中', desc: '社区安全监控、智能门禁、车辆管理', updateTime: '2025-03-31 17:00', icon: Warning },
+  { id: 4, systemName: '网格化管理平台', owner: '赵明', status: '运行中', desc: '社区网格化管理、事件处置、巡查管理', updateTime: '2025-03-31 16:00', icon: DataLine },
+  { id: 5, systemName: '应急指挥系统', owner: '陈静', status: '运行中', desc: '社区应急指挥、突发事件处置、应急预案管理', updateTime: '2025-03-30 14:00', icon: Box },
+  { id: 6, systemName: '社区资产管理', owner: '刘强', status: '运行中', desc: '社区公共设施、固定资产、物资管理', updateTime: '2025-03-29 11:00', icon: Folder },
+  { id: 7, systemName: '便民服务工单', owner: '孙丽', status: '运行中', desc: '居民服务工单、投诉建议、满意度评价', updateTime: '2025-03-28 09:00', icon: Cpu },
+  { id: 8, systemName: '社区能耗监控', owner: '周伟', status: '运行中', desc: '社区能耗监测、节能管理、费用统计', updateTime: '2025-03-27 13:00', icon: DataLine },
+  { id: 9, systemName: '社区安全事件', owner: '马俊', status: '运行中', desc: '社区安全事件、隐患排查、整改跟踪', updateTime: '2025-03-26 10:00', icon: Warning },
+  { id: 10, systemName: '数据备份系统', owner: '许静', status: '运行中', desc: '系统数据备份、容灾恢复、安全存储', updateTime: '2025-03-25 15:00', icon: Folder },
+  { id: 11, systemName: '社区养老服务', owner: '宋倩', status: '运行中', desc: '老年人关爱服务、居家养老、助老服务', updateTime: '2025-03-24 15:00', icon: User },
+  { id: 12, systemName: '社区文化活动', owner: '魏东', status: '运行中', desc: '社区文化活动、居民教育、文体活动', updateTime: '2025-03-23 14:00', icon: Calendar },
+  { id: 13, systemName: '社区环境监测', owner: '冯媛', status: '运行中', desc: '社区环境监测、垃圾分类、卫生管理', updateTime: '2025-03-22 13:00', icon: DataAnalysis },
+  { id: 14, systemName: '社区志愿服务', owner: '张丽', status: '运行中', desc: '志愿者服务管理、活动组织、积分管理', updateTime: '2025-03-21 12:00', icon: Service },
+  { id: 15, systemName: '社区医疗健康', owner: '李华', status: '运行中', desc: '社区医疗服务、健康档案、慢病管理', updateTime: '2025-03-20 11:00', icon: FirstAidKit },
+  { id: 16, systemName: '超融合节点管理', owner: '张建国', status: '运行中', desc: '超融合节点服务器管理、资源监控、性能优化', updateTime: '2025-03-19 10:00', icon: Cpu },
+  { id: 17, systemName: '分布式存储管理', owner: '张建国', status: '运行中', desc: '分布式存储池管理、容量监控、数据冗余', updateTime: '2025-03-18 09:00', icon: Folder },
+  { id: 18, systemName: '网络设备管理', owner: '张建国', status: '运行中', desc: '万兆核心交换机管理、VLAN配置、流量监控', updateTime: '2025-03-17 08:00', icon: Connection }
 ])
 const systemList = ref<SystemItem[]>([])
 

@@ -5,8 +5,8 @@
       <template #header>
         <div class="card-header">
 <!--          <img src="@/assets/logo.png" alt="logo" class="logo" />-->
-          <h2>超融合平台</h2>
-          <p class="subtitle">智慧城市 · 数字政务</p>
+          <h2>兴隆庄街道超融合平台</h2>
+          <p class="subtitle">智慧社区 · 便民服务</p>
         </div>
       </template>
       
