@@ -144,15 +144,16 @@ interface TrendDataType {
   month: TrendData;
 }
 
+// 本地化能耗统计数据
 const stat = reactive({
-  total: 12580,
-  totalTrend: -5.2,
-  server: 6850,
-  serverTrend: -3.8,
-  network: 3200,
-  networkTrend: -6.5,
-  storage: 2530,
-  storageTrend: -4.2
+  total: 15800,
+  totalTrend: -3.2,
+  server: 8200,
+  serverTrend: -2.5,
+  network: 4100,
+  networkTrend: -4.1,
+  storage: 3500,
+  storageTrend: -3.8
 })
 
 const trendType = ref('day')
@@ -160,37 +161,39 @@ const trendChartRef = ref<HTMLDivElement | null>(null)
 const pieChartRef = ref<HTMLDivElement | null>(null)
 const trendLoading = ref(false)
 
+// 本地化能耗排行数据
 const energyRanking = ref<EnergyRanking[]>([
-  { name: '核心交换机-01', type: '网络设备', energy: 850, trend: -5.2 },
-  { name: '存储阵列-02', type: '存储设备', energy: 720, trend: -3.8 },
-  { name: '应用服务器-03', type: '服务器', energy: 680, trend: -4.5 },
-  { name: '数据库服务器-01', type: '服务器', energy: 650, trend: -2.8 },
-  { name: '备份服务器-02', type: '服务器', energy: 580, trend: -6.2 }
+  { name: '社区主交换机', type: '网络设备', energy: 1200, trend: -3.5 },
+  { name: '存储阵列A', type: '存储设备', energy: 950, trend: -2.8 },
+  { name: '应用服务器B', type: '服务器', energy: 900, trend: -2.2 },
+  { name: '数据库服务器C', type: '服务器', energy: 850, trend: -3.1 },
+  { name: '备份服务器D', type: '服务器', energy: 800, trend: -4.0 }
 ])
 
+// 本地化能耗趋势数据
 const trendData: TrendDataType = {
   day: {
-    xAxis: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+    xAxis: ['05-14', '05-15', '05-16', '05-17', '05-18', '05-19', '05-20'],
     series: [
-      { name: '服务器', data: [320, 280, 250, 380, 420, 450, 400, 350] },
-      { name: '网络设备', data: [150, 130, 120, 180, 200, 220, 190, 160] },
-      { name: '存储设备', data: [120, 110, 100, 140, 160, 170, 150, 130] }
+      { name: '服务器', data: [1200, 1150, 1180, 1220, 1190, 1170, 1150] },
+      { name: '网络设备', data: [600, 590, 610, 620, 600, 580, 570] },
+      { name: '存储设备', data: [500, 480, 490, 510, 500, 490, 480] }
     ]
   },
   week: {
-    xAxis: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+    xAxis: ['5-1', '5-5', '5-10', '5-15', '5-20', '5-25', '5-31'],
     series: [
-      { name: '服务器', data: [3200, 3100, 3300, 3400, 3200, 2800, 2900] },
-      { name: '网络设备', data: [1500, 1450, 1550, 1600, 1500, 1300, 1350] },
-      { name: '存储设备', data: [1200, 1180, 1250, 1300, 1200, 1100, 1150] }
+      { name: '服务器', data: [8200, 8100, 8300, 8200, 8150, 8000, 7900] },
+      { name: '网络设备', data: [4100, 4050, 4200, 4150, 4100, 4000, 3950] },
+      { name: '存储设备', data: [3500, 3450, 3550, 3500, 3480, 3400, 3350] }
     ]
   },
   month: {
-    xAxis: ['1月', '2月', '3月', '4月', '5月', '6月'],
+    xAxis: ['1月', '2月', '3月', '4月', '5月'],
     series: [
-      { name: '服务器', data: [32000, 31000, 33000, 34000, 32000, 28000] },
-      { name: '网络设备', data: [15000, 14500, 15500, 16000, 15000, 13000] },
-      { name: '存储设备', data: [12000, 11800, 12500, 13000, 12000, 11000] }
+      { name: '服务器', data: [32000, 31000, 33000, 34000, 32800] },
+      { name: '网络设备', data: [15000, 14500, 15500, 16000, 15800] },
+      { name: '存储设备', data: [12000, 11800, 12500, 13000, 12900] }
     ]
   }
 }

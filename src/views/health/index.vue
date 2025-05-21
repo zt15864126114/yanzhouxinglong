@@ -1,74 +1,66 @@
 <template>
-  <div class="health-container">
-    <div class="health-stats">
-      <el-card class="stat-card" shadow="hover">
-        <div class="stat-title">正常服务</div>
-        <div class="stat-value normal">{{ stat.normal }}</div>
-      </el-card>
-      <el-card class="stat-card" shadow="hover">
-        <div class="stat-title">异常服务</div>
-        <div class="stat-value error">{{ stat.error }}</div>
-      </el-card>
-      <el-card class="stat-card" shadow="hover">
-        <div class="stat-title">告警服务</div>
-        <div class="stat-value warning">{{ stat.warning }}</div>
-      </el-card>
-    </div>
-    <el-card class="trend-card" shadow="hover">
-      <div class="trend-title">近7天服务健康趋势</div>
-      <div ref="trendChartRef" class="trend-chart"></div>
-    </el-card>
-    <div class="operation-bar">
-      <el-form :inline="true" :model="searchForm" class="search-form">
-        <el-form-item>
-          <el-input v-model="searchForm.keyword" placeholder="服务名称/负责人" clearable @keyup.enter="handleSearch" />
-        </el-form-item>
-        <el-form-item>
-          <el-select v-model="searchForm.status" placeholder="健康状态" clearable style="width: 140px">
-            <el-option label="正常" value="正常" />
-            <el-option label="异常" value="异常" />
-            <el-option label="告警" value="告警" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="handleSearch">搜索</el-button>
-          <el-button @click="resetSearch">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-    <el-card class="health-list">
-      <el-button type="primary" link @click="handleAdd" style="margin-bottom: 12px;">新增服务</el-button>
-      <el-table :data="healthList" border style="width: 100%">
-        <el-table-column prop="serviceName" label="服务名称" min-width="140" />
-        <el-table-column prop="owner" label="负责人" min-width="100" />
-        <el-table-column prop="status" label="健康状态" min-width="100">
-          <template #default="{ row }">
-            <el-tag :type="row.status === '正常' ? 'success' : row.status === '告警' ? 'warning' : 'danger'">
-              {{ row.status }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="lastCheck" label="最近检查" min-width="160" />
-        <el-table-column prop="desc" label="描述" min-width="180" />
-        <el-table-column label="操作" width="180">
-          <template #default="{ row }">
-            <el-button type="primary" link @click="handleEdit(row)">编辑</el-button>
-            <el-button type="danger" link @click="handleDelete(row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="pagination">
-        <el-pagination
-          v-model:current-page="currentPage"
-          v-model:page-size="pageSize"
-          :page-sizes="[10, 20, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
+  <div class="health-root">
+    <!-- 顶部仪表盘统计区 -->
+    <div class="dashboard">
+      <div class="stat-card" v-for="item in statCards" :key="item.label">
+        <el-progress type="circle" :percentage="item.percent" :color="item.color" :width="54" :stroke-width="6" :show-text="false" />
+        <div class="stat-label">{{ item.label }}</div>
+        <div class="stat-value" :style="{color: item.color}">{{ item.value }}</div>
       </div>
-    </el-card>
+      <div class="stat-card total">
+        <div class="stat-label">服务总数</div>
+        <div class="stat-value">{{ stat.total }}</div>
+      </div>
+      <div class="stat-card healthrate">
+        <div class="stat-label">健康率</div>
+        <div class="stat-value healthrate">{{ healthRate }}%</div>
+      </div>
+      <div class="stat-search">
+        <el-input v-model="searchForm.keyword" placeholder="服务名称/负责人" clearable @keyup.enter="handleSearch" size="small" />
+        <el-select v-model="searchForm.status" placeholder="健康状态" clearable size="small" style="width: 110px; margin-left: 8px;">
+          <el-option label="全部" value="" />
+          <el-option label="正常" value="正常" />
+          <el-option label="异常" value="异常" />
+          <el-option label="告警" value="告警" />
+        </el-select>
+        <el-button type="primary" size="small" @click="handleSearch" style="margin-left: 8px;">搜索</el-button>
+      </div>
+    </div>
+    <!-- 主体卡片区 -->
+    <div class="card-masonry">
+      <el-empty v-if="!healthList.length" description="暂无服务" />
+      <div v-else class="masonry-grid">
+        <div v-for="item in healthList" :key="item.id" class="health-card">
+          <div class="card-header">
+            <span class="status-dot" :class="item.status"></span>
+            <span class="service-name">{{ item.serviceName }}</span>
+            <span class="owner">{{ item.owner }}</span>
+          </div>
+          <div class="card-desc" :title="item.desc">{{ item.desc }}</div>
+          <div class="card-footer">
+            <span class="last-check">最近检查：{{ item.lastCheck }}</span>
+            <div class="card-actions">
+              <el-button type="primary" link size="small" @click="handleDetail(item)">详情</el-button>
+              <el-button type="success" link size="small" @click="handleEdit(item)">编辑</el-button>
+              <el-button type="danger" link size="small" @click="handleDelete(item)">删除</el-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 分页 -->
+    <div class="pagination center">
+      <el-pagination
+        v-model:current-page="currentPage"
+        v-model:page-size="pageSize"
+        :page-sizes="[10, 20, 50, 100]"
+        :total="total"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
+    <!-- 新增/编辑服务弹窗 -->
     <el-dialog v-model="dialogVisible" :title="dialogType === 'add' ? '新增服务' : '编辑服务'" width="500px">
       <el-form ref="healthFormRef" :model="healthForm" :rules="healthRules" label-width="90px">
         <el-form-item label="服务名称" prop="serviceName">
@@ -93,17 +85,30 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="handleSubmit">确定</el-button>
+        <el-button type="primary" :loading="formLoading" @click="handleSubmit">确定</el-button>
       </template>
     </el-dialog>
+    <!-- 详情弹窗 -->
+    <el-drawer v-model="detailDrawerVisible" title="服务详情" size="400px" direction="rtl" @close="onDrawerClose">
+      <div v-if="currentDetail">
+        <div class="drawer-title">{{ currentDetail.serviceName }}</div>
+        <div class="drawer-row"><b>负责人：</b>{{ currentDetail.owner }}</div>
+        <div class="drawer-row"><b>健康状态：</b><el-tag :type="getStatusTag(currentDetail.status)">{{ currentDetail.status }}</el-tag></div>
+        <div class="drawer-row"><b>最近检查：</b>{{ currentDetail.lastCheck }}</div>
+        <div class="drawer-row"><b>描述：</b>{{ currentDetail.desc }}</div>
+      </div>
+    </el-drawer>
+    <!-- 新增服务悬浮按钮 -->
+    <el-button class="fab" type="primary" circle @click="handleAdd"><el-icon><Plus /></el-icon></el-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, nextTick } from 'vue'
+import { ref, reactive, computed, onMounted, nextTick, onUnmounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import type { FormInstance } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
 import * as echarts from 'echarts'
+import type { FormInstance } from 'element-plus'
 
 interface HealthItem {
   id: number;
@@ -128,15 +133,13 @@ const originalHealthList = ref<HealthItem[]>([
 ])
 const healthList = ref<HealthItem[]>([])
 
-const stat = reactive({ normal: 0, error: 0, warning: 0 })
-
-const trendChartRef = ref<HTMLDivElement | null>(null)
-const trendData = ref({
-  days: ['3-26', '3-27', '3-28', '3-29', '3-30', '3-31', '4-1'],
-  normal: [6, 6, 7, 7, 7, 7, 7],
-  error: [2, 2, 2, 2, 2, 2, 1],
-  warning: [2, 2, 1, 1, 1, 1, 2]
-})
+const stat = reactive({ normal: 0, error: 0, warning: 0, total: 0 })
+const statCards = computed(() => [
+  { label: '正常', value: stat.normal, percent: stat.total ? Math.round(stat.normal/stat.total*100) : 0, color: '#67C23A', status: '正常' },
+  { label: '异常', value: stat.error, percent: stat.total ? Math.round(stat.error/stat.total*100) : 0, color: '#F56C6C', status: '异常' },
+  { label: '告警', value: stat.warning, percent: stat.total ? Math.round(stat.warning/stat.total*100) : 0, color: '#E6A23C', status: '告警' }
+])
+const healthRate = computed(() => stat.total ? Math.round(stat.normal/stat.total*100) : 0)
 
 const searchForm = reactive({
   keyword: '',
@@ -158,6 +161,10 @@ const healthForm = reactive<HealthItem>({
   lastCheck: '',
   desc: ''
 })
+const formLoading = ref(false)
+
+const detailDrawerVisible = ref(false)
+const currentDetail = ref<HealthItem | null>(null)
 
 const healthRules = {
   serviceName: [{ required: true, message: '请输入服务名称', trigger: 'blur' }],
@@ -217,6 +224,7 @@ const handleDelete = (row: HealthItem) => {
 }
 const handleSubmit = async () => {
   if (!healthFormRef.value) return
+  formLoading.value = true
   await healthFormRef.value.validate((valid) => {
     if (valid) {
       if (dialogType.value === 'add') {
@@ -234,6 +242,7 @@ const handleSubmit = async () => {
       }
       dialogVisible.value = false
     }
+    formLoading.value = false
   })
 }
 const handleSizeChange = (val: number) => {
@@ -244,121 +253,226 @@ const handleCurrentChange = (val: number) => {
   currentPage.value = val
   handleSearch()
 }
-
+const handleDetail = (row: HealthItem) => {
+  currentDetail.value = row
+  detailDrawerVisible.value = true
+}
 function updateStat() {
   stat.normal = originalHealthList.value.filter(d => d.status === '正常').length
   stat.error = originalHealthList.value.filter(d => d.status === '异常').length
   stat.warning = originalHealthList.value.filter(d => d.status === '告警').length
+  stat.total = originalHealthList.value.length
 }
-
-function renderTrendChart() {
-  if (!trendChartRef.value) return
-  const chart = echarts.init(trendChartRef.value)
-  chart.setOption({
-    tooltip: { trigger: 'axis' },
-    legend: { data: ['正常', '异常', '告警'] },
-    grid: { left: 40, right: 20, top: 40, bottom: 30 },
-    xAxis: { type: 'category', data: trendData.value.days },
-    yAxis: { type: 'value', minInterval: 1 },
-    series: [
-      { name: '正常', type: 'line', data: trendData.value.normal, smooth: true, lineStyle: { color: '#67C23A' } },
-      { name: '异常', type: 'line', data: trendData.value.error, smooth: true, lineStyle: { color: '#F56C6C' } },
-      { name: '告警', type: 'line', data: trendData.value.warning, smooth: true, lineStyle: { color: '#E6A23C' } }
-    ]
-  })
+function getStatusTag(status: string) {
+  if (status === '正常') return 'success'
+  if (status === '异常') return 'danger'
+  if (status === '告警') return 'warning'
+  return 'info'
 }
-
+function onDrawerClose() {
+  currentDetail.value = null
+}
 onMounted(() => {
   handleSearch()
-  updateStat()
-  nextTick(() => {
-    renderTrendChart()
-  })
 })
 </script>
 
 <style scoped>
-.health-container {
-  padding: 20px;
+.health-root {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 24px 16px 40px 16px;
+  background: #f6f8fa;
+  min-height: 100vh;
 }
-.health-stats {
+.dashboard {
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 .stat-card {
-  flex: 1;
-  text-align: center;
-  padding: 16px 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.04);
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+  min-height: 90px;
 }
-.stat-title {
-  font-size: 15px;
+.stat-card.total {
+  background: #f5f7fa;
+  min-width: 80px;
+}
+.stat-card.healthrate {
+  background: #f0f9eb;
+  color: #67C23A;
+  min-width: 90px;
+}
+.stat-label {
+  font-size: 13px;
   color: #888;
-  margin-bottom: 8px;
+  margin-top: 6px;
 }
 .stat-value {
-  font-size: 32px;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 2px;
+}
+.stat-value.healthrate {
+  font-size: 26px;
+  color: #67C23A;
   font-weight: bold;
 }
-.stat-value.normal {
-  color: #67C23A;
+.stat-search {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }
-.stat-value.error {
-  color: #F56C6C;
+.card-masonry {
+  min-height: 320px;
 }
-.stat-value.warning {
-  color: #E6A23C;
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
 }
-.trend-card {
-  margin-bottom: 20px;
+.health-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.06);
+  padding: 18px 18px 12px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: box-shadow 0.2s, transform 0.2s;
+  min-width: 0;
+  min-height: 120px;
 }
-.trend-title {
-  font-size: 15px;
-  color: #888;
+.health-card:hover {
+  box-shadow: 0 4px 16px 0 rgba(64,158,255,0.12);
+  transform: translateY(-2px) scale(1.01);
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
   margin-bottom: 8px;
 }
-.trend-chart {
-  width: 100%;
-  height: 260px;
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 2px;
 }
-.operation-bar {
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.status-dot.正常 {
+  background: #67C23A;
 }
-.search-form {
-  display: flex;
-  align-items: center;
+.status-dot.异常 {
+  background: #F56C6C;
 }
-.health-list {
-  margin-bottom: 20px;
+.status-dot.告警 {
+  background: #E6A23C;
 }
-.pagination {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
+.service-name {
+  flex: 1;
+  font-weight: bold;
 }
-.table-actions {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-  min-width: 0;
-}
-.table-actions .el-button.is-link {
+.owner {
+  color: #888;
   font-size: 13px;
-  padding: 0 6px;
-  min-width: 0;
-  max-width: 80px;
-  white-space: nowrap;
 }
-.el-button.is-link {
+.card-desc {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 10px;
+  min-height: 32px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.card-desc:hover {
+  white-space: normal;
+  background: #f5f7fa;
+  z-index: 2;
+  position: relative;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #999;
+  margin-top: 8px;
+}
+.card-actions {
+  display: flex;
+  gap: 6px;
+}
+.last-check {
+  color: #bbb;
+}
+.pagination.center {
+  justify-content: center;
+  display: flex;
+}
+.fab {
+  position: fixed;
+  right: 36px;
+  bottom: 36px;
+  z-index: 10;
+  box-shadow: 0 2px 12px 0 rgba(64,158,255,0.18);
+}
+.drawer-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.drawer-row {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+@media (max-width: 900px) {
+  .dashboard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .masonry-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.card-actions ::v-deep(.el-button--link) {
   background: none !important;
   border: none !important;
-  color: var(--el-color-primary) !important;
+  color: inherit !important;
   box-shadow: none !important;
-  padding: 0 6px !important;
   min-width: 0 !important;
-  font-size: 13px !important;
+  padding: 0 8px !important;
+  font-size: 14px !important;
+  display: inline-block !important;
+}
+.card-actions ::v-deep(.el-button--primary),
+.card-actions ::v-deep(.el-button--success),
+.card-actions ::v-deep(.el-button--danger) {
+  background: none !important;
+  color: inherit !important;
+}
+.card-actions ::v-deep(.el-button--link:active),
+.card-actions ::v-deep(.el-button--link:focus),
+.card-actions ::v-deep(.el-button--link:hover) {
+  background: none !important;
+  color: var(--el-color-primary) !important;
+  text-decoration: underline !important;
 }
 </style> 

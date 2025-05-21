@@ -172,11 +172,11 @@ const stat = reactive({
 })
 
 const originalBackupList = ref<BackupItem[]>([
-  { id: 1, name: '数据库全量备份', owner: '李明', type: 'full', source: '/data/mysql', target: '/backup/mysql/full', schedule: 'daily', status: 'completed', progress: 100, lastRunTime: '2025-04-01 02:00', desc: '每日凌晨全量备份' },
-  { id: 2, name: '文件服务器增量备份', owner: '王芳', type: 'incremental', source: '/data/files', target: '/backup/files/incremental', schedule: 'weekly', status: 'running', progress: 45, lastRunTime: '2025-04-01 03:00', desc: '文件服务器每周增量备份' },
-  { id: 3, name: '应用系统差异备份', owner: '赵强', type: 'differential', source: '/data/apps', target: '/backup/apps/differential', schedule: 'monthly', status: 'failed', progress: 60, lastRunTime: '2025-04-01 04:00', desc: '应用系统每月差异备份' },
-  { id: 4, name: '配置文件备份', owner: '孙丽', type: 'full', source: '/etc', target: '/backup/config', schedule: 'daily', status: 'waiting', progress: 0, lastRunTime: '2025-03-31 02:00', desc: '系统配置文件每日全量备份' },
-  { id: 5, name: '日志文件备份', owner: '周伟', type: 'incremental', source: '/var/log', target: '/backup/logs', schedule: 'weekly', status: 'completed', progress: 100, lastRunTime: '2025-03-31 03:00', desc: '日志文件每周增量备份' }
+  { id: 1, name: '社区人口数据库备份', owner: '张建国', type: 'full', source: '/data/population', target: '/backup/population/full', schedule: 'daily', status: 'completed', progress: 100, lastRunTime: '2025-05-01 02:00', desc: '每日凌晨全量备份社区人口数据' },
+  { id: 2, name: '便民服务系统备份', owner: '李秀英', type: 'incremental', source: '/data/service', target: '/backup/service/incremental', schedule: 'weekly', status: 'running', progress: 45, lastRunTime: '2025-05-01 03:00', desc: '便民服务系统每周增量备份' },
+  { id: 3, name: '网格化管理数据备份', owner: '王德福', type: 'differential', source: '/data/grid', target: '/backup/grid/differential', schedule: 'monthly', status: 'failed', progress: 60, lastRunTime: '2025-05-01 04:00', desc: '网格化管理数据每月差异备份' },
+  { id: 4, name: '社区监控录像备份', owner: '赵丽华', type: 'full', source: '/data/video', target: '/backup/video', schedule: 'daily', status: 'waiting', progress: 0, lastRunTime: '2025-05-01 02:00', desc: '社区监控录像每日全量备份' },
+  { id: 5, name: '应急指挥系统备份', owner: '刘志强', type: 'incremental', source: '/data/emergency', target: '/backup/emergency', schedule: 'weekly', status: 'completed', progress: 100, lastRunTime: '2025-05-01 03:00', desc: '应急指挥系统每周增量备份' }
 ])
 const backupList = ref<BackupItem[]>([])
 
