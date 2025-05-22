@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard-container">
-      <h1 class="dashboard-title">济宁市兖州区兴隆庄街道办事处超融合平台</h1>
+      <h1 class="dashboard-title">济宁市兖州区兴隆庄街道办事处云定制化超融合平台</h1>
       <!-- 顶部统计卡片 -->
       <el-row :gutter="20">
         <el-col :span="6">
@@ -133,14 +133,14 @@
   
   // 统计数据
   const systemStats = ref({
-    total: 18,
+    total: 6,
     running: 18,
     warning: 0,
     error: 0
   })
   
   const hardwareStats = ref({
-    total: 4,
+    total: 2,
     normal: 4,
     warning: 0,
     error: 0

@@ -5,7 +5,7 @@
       <template #header>
         <div class="card-header">
 <!--          <img src="@/assets/logo.png" alt="logo" class="logo" />-->
-          <h2>兴隆庄街道超融合平台</h2>
+          <h2>济宁市兖州区兴隆庄街道办事处云定制化超融合平台</h2>
           <p class="subtitle">智慧社区 · 便民服务</p>
         </div>
       </template>
