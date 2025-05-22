@@ -1,5 +1,6 @@
 <template>
     <div class="dashboard-container">
+      <h1 class="dashboard-title">济宁市兖州区兴隆庄街道办事处超融合平台</h1>
       <!-- 顶部统计卡片 -->
       <el-row :gutter="20">
         <el-col :span="6">
@@ -250,6 +251,13 @@
   <style scoped>
   .dashboard-container {
     padding: 20px;
+  }
+  
+  .dashboard-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
   }
   
   .stat-card {
