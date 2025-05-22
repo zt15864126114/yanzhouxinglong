@@ -351,7 +351,7 @@ const selectedAlerts = ref<any[]>([])
 const originalAlertList = ref([
   { 
     id: 1, 
-    time: '2025-03-20 10:30:00', 
+    time: '2025-05-20 10:30:00',
     level: 'critical', 
     content: '服务器A CPU使用率超过90%', 
     source: '服务器A',
@@ -362,7 +362,7 @@ const originalAlertList = ref([
   },
   { 
     id: 2, 
-    time: '2025-03-20 09:15:00', 
+    time: '2025-05-20 09:15:00',
     level: 'warning', 
     content: '存储阵列B空间使用率超过80%', 
     source: '存储阵列B',
@@ -373,7 +373,7 @@ const originalAlertList = ref([
   },
   { 
     id: 3, 
-    time: '2025-03-19 16:45:00', 
+    time: '2025-05-19 16:45:00',
     level: 'info', 
     content: '系统有新补丁可用', 
     source: '系统',
@@ -390,7 +390,7 @@ const alertList = ref([...originalAlertList.value])
 const logList = ref([
   { 
     id: 1, 
-    time: '2025-03-20 10:00:00', 
+    time: '2025-05-20 10:00:00',
     level: 'info', 
     module: '系统', 
     content: '系统启动成功',
@@ -398,7 +398,7 @@ const logList = ref([
   },
   { 
     id: 2, 
-    time: '2025-03-20 09:55:00', 
+    time: '2025-05-20 09:55:00',
     level: 'warning', 
     module: 'CPU', 
     content: 'CPU使用率超过80%',

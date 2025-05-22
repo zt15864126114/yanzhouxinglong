@@ -164,18 +164,18 @@
   
   // 系统列表数据
   const systemList = ref([
-    { id: 1, systemName: '社区人口管理', owner: '王晓强', status: '运行中', updateTime: '2025-04-01 09:00' },
-    { id: 2, systemName: '便民服务门户', owner: '李文娜', status: '运行中', updateTime: '2025-04-01 08:30' },
-    { id: 3, systemName: '社区监控平台', owner: '刘志洋', status: '运行中', updateTime: '2025-03-31 17:00' },
-    { id: 4, systemName: '网格化管理平台', owner: '张丽敏', status: '运行中', updateTime: '2025-03-31 16:00' },
-    { id: 5, systemName: '应急指挥系统', owner: '陈国磊', status: '运行中', updateTime: '2025-03-30 14:00' }
+    { id: 1, systemName: '社区人口管理', owner: '王晓强', status: '运行中', updateTime: '2025-05-01 09:00' },
+    { id: 2, systemName: '便民服务门户', owner: '李文娜', status: '运行中', updateTime: '2025-05-01 08:30' },
+    { id: 3, systemName: '社区监控平台', owner: '刘志洋', status: '运行中', updateTime: '2025-05-31 17:00' },
+    { id: 4, systemName: '网格化管理平台', owner: '张丽敏', status: '运行中', updateTime: '2025-05-31 16:00' },
+    { id: 5, systemName: '应急指挥系统', owner: '陈国磊', status: '运行中', updateTime: '2025-05-30 14:00' }
   ])
   
   // 告警列表
   const alarmList = ref([
-    { type: 'warning', time: '2025-04-01 10:30', content: '存储空间使用率超过70%' },
-    { type: 'info', time: '2025-04-01 09:15', content: '系统例行维护完成' },
-    { type: 'success', time: '2025-04-01 08:00', content: '数据备份任务完成' }
+    { type: 'warning', time: '2025-05-01 10:30', content: '存储空间使用率超过70%' },
+    { type: 'info', time: '2025-05-01 09:15', content: '系统例行维护完成' },
+    { type: 'success', time: '2025-05-01 08:00', content: '数据备份任务完成' }
   ])
   
   // 刷新方法

@@ -119,10 +119,10 @@ interface AssetItem {
 }
 
 const originalAssetList = ref<AssetItem[]>([
-  { id: 1, assetNo: 'ZC2024001', name: '核心交换机-01', type: '网络设备', purchaseDate: '2025-01-10', warranty: '2026-01-10', vendor: '华为', price: '¥35000', status: '在用' },
-  { id: 2, assetNo: 'ZC2024002', name: '应用服务器-01', type: '服务器', purchaseDate: '2025-02-15', warranty: '2026-02-15', vendor: '浪潮', price: '¥42000', status: '在用' },
-  { id: 3, assetNo: 'ZC2024003', name: '存储阵列-01', type: '存储设备', purchaseDate: '2025-03-20', warranty: '2026-03-20', vendor: '华为', price: '¥60000', status: '闲置' },
-  { id: 4, assetNo: 'ZC2024004', name: '防火墙-01', type: '安全设备', purchaseDate: '2025-04-05', warranty: '2026-04-05', vendor: '深信服', price: '¥25000', status: '在用' },
+  { id: 1, assetNo: 'ZC2024001', name: '核心交换机-01', type: '网络设备', purchaseDate: '2025-05-10', warranty: '2026-01-10', vendor: '华为', price: '¥35000', status: '在用' },
+  { id: 2, assetNo: 'ZC2024002', name: '应用服务器-01', type: '服务器', purchaseDate: '2025-05-15', warranty: '2026-02-15', vendor: '浪潮', price: '¥42000', status: '在用' },
+  { id: 3, assetNo: 'ZC2024003', name: '存储阵列-01', type: '存储设备', purchaseDate: '2025-05-20', warranty: '2026-03-20', vendor: '华为', price: '¥60000', status: '闲置' },
+  { id: 4, assetNo: 'ZC2024004', name: '防火墙-01', type: '安全设备', purchaseDate: '2025-05-05', warranty: '2026-04-05', vendor: '深信服', price: '¥25000', status: '在用' },
   { id: 5, assetNo: 'ZC2024005', name: '核心路由器-01', type: '网络设备', purchaseDate: '2025-05-12', warranty: '2026-05-12', vendor: '锐捷', price: '¥38000', status: '在用' },
   { id: 6, assetNo: 'ZC2024006', name: '应用服务器-02', type: '服务器', purchaseDate: '2025-06-18', warranty: '2026-06-18', vendor: '华为', price: '¥41000', status: '报废' },
   { id: 7, assetNo: 'ZC2024007', name: '备份存储-01', type: '存储设备', purchaseDate: '2025-07-22', warranty: '2026-07-22', vendor: '联想', price: '¥32000', status: '在用' },
